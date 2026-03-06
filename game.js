@@ -89,9 +89,7 @@ export class MiniChessGame {
   }
 
   move(fromRow, fromCol, toRow, toCol, promotionChoice = null) {
-    if (this.status === "checkmate" || this.status === "stalemate") {
-      return { ok: false, reason: "Game is over." };
-    }
+    if (this.status !== "playing") return { ok: false, reason: "Game is over." };
 
     const legalMoves = this.generateLegalMovesForSquare(fromRow, fromCol);
     const move = legalMoves.find((candidate) => candidate.toRow === toRow && candidate.toCol === toCol);

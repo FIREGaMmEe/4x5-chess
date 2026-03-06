@@ -28,7 +28,6 @@ class MiniChessUI {
 
     this.promotionModal = document.getElementById("promotion-modal");
     this.promotionOptions = document.getElementById("promotion-options");
-    this.toastStack = document.getElementById("toast-stack");
 
     this.game = new MiniChessGame();
     this.selected = null;
@@ -174,10 +173,7 @@ class MiniChessUI {
     const state = this.game.getState();
 
     if (state.status === "check") {
-      this.showToast({
-        title: "Check",
-        message: `${state.turn === "w" ? "White" : "Black"} king is under attack!`,
-      });
+      this.showMessage(`Check on ${state.turn === "w" ? "White" : "Black"}!`);
       return;
     }
 
@@ -230,27 +226,6 @@ class MiniChessUI {
     });
 
     this.promotionModal.classList.remove("hidden");
-  }
-
-  showToast({ title, message }) {
-    if (!this.toastStack) return;
-
-    const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.innerHTML = `
-      <div class="toast__icon">🏆</div>
-      <div>
-        <p class="toast__title">${title}</p>
-        <p class="toast__message">${message}</p>
-      </div>
-    `;
-
-    this.toastStack.appendChild(toast);
-
-    window.setTimeout(() => {
-      toast.classList.add("fade-out");
-      window.setTimeout(() => toast.remove(), 250);
-    }, 2100);
   }
 
   notifyHooks() {
